@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: email
+  datasource:
+    url: jdbc:postgresql://localhost:5432/email
+    username: amigoscode
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+  rabbitmq:
+    addresses: localhost:5672
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ayyappavardhan006@gmail.com
+    password: rvdt enml llru sttk
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+      transport:
+        protocol: smtp
+
+
+
+server:
+  port: 8085
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
+      #rvdt enml llru sttk
+
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queue:
+    emailsender: emailsend.queue
+  routing-keys:
+    internal-emailsender: internal.emailsend.routing-key

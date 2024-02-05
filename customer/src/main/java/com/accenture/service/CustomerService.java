@@ -1,5 +1,6 @@
 package com.accenture.service;
 
+import com.accenture.config.RabbitMqMessageProducer;
 import com.accenture.entity.Customer;
 import com.accenture.exception.EmailAlreadyTakenException;
 import com.accenture.exception.FraudsterException;
@@ -24,11 +25,11 @@ import java.util.regex.Pattern;
 @Builder
 @Slf4j
 public class CustomerService {
-
     private final CustomerRepository customerRepository;
     private final RestTemplate restTemplate;
     private final FraudClient fraudClient;
     private final NotificationClient notificationClient;
+    private final RabbitMqMessageProducer messageProducer;
     public void customerRegistration(CustomerRegistrationRequest customerRegistrationRequest) {
         Customer customer = Customer.builder()
                 .firstName(customerRegistrationRequest.firstName())
@@ -49,6 +50,12 @@ public class CustomerService {
             throw new EmailAlreadyTakenException("Email already taken");
         }
         // fraud check by using email
+        fraudster(customerRegistrationRequest);
+        customerRepository.save(customer);
+        //todo: send notification
+        notificationService(customerRegistrationRequest);
+    }
+    private boolean fraudster(CustomerRegistrationRequest customerRegistrationRequest) {
         FraudCheckResponse fraudCheckResponse;
         try {
 
@@ -70,19 +77,24 @@ public class CustomerService {
         if (fraudCheckResponse.isFraudster()) {
             throw new FraudsterException(" Email is Fraudster ");
         }
-        customerRepository.save(customer);
-        //todo: send notification
+        return false;
+    }
+    private ResponseEntity<String> notificationService(CustomerRegistrationRequest customerRegistrationRequest) {
+        ResponseEntity<String> stringResponseEntity = null;
         try {
             log.info("Calling the notification service with URL:{}", (Object) notificationClient.getNotificationUrl());
-            ResponseEntity<String> stringResponseEntity = notificationClient.sendNotification(customerRegistrationRequest);
+            stringResponseEntity = notificationClient.sendNotification(customerRegistrationRequest);
             log.info("Response from notification service: {}", stringResponseEntity);
         } catch (Exception e) {
             log.error("Error to send notification: {}", e.getMessage());
         }
+        return stringResponseEntity;
     }
+
     private boolean isValidEmail(String email) {
         String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
         return EMAIL_PATTERN.matcher(email).matches();
     }
+
 }

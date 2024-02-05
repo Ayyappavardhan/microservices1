@@ -10,7 +10,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * Hello world!
  *
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.accenture", "com.accenture.config"})
 @EnableDiscoveryClient
 @EnableFeignClients (
     basePackages = {"com.accenture.fraud", "com.accenture.notification"})

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="customer@localhost" uuid="c281ebaa-f2c7-4f9d-9110-a9c5103a01ce">
+    <data-source source="LOCAL" name="customer@localhost" uuid="36fac63c-07b4-4e9c-91c0-6b348a347449">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
@@ -13,7 +13,7 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="fraud@localhost" uuid="901b677e-c2cc-4afd-acc0-c673f7cd9b33">
+    <data-source source="LOCAL" name="fraud@localhost" uuid="543c638c-5d3a-4c61-a734-9ea4220831e8">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
@@ -25,7 +25,7 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="notification@localhost" uuid="2f8b4145-f165-4cf2-8813-4113de13dc14">
+    <data-source source="LOCAL" name="notification@localhost" uuid="e926c8f5-4fd1-47b5-84af-88848897fd72">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
